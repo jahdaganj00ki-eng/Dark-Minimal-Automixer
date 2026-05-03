@@ -6,6 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AutoDJMix.Persistence\AutoDJMix.Persistence.csproj" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0" PrivateAssets="all" />
   </ItemGroup>
 </Project>
