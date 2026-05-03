@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <UseWPF>true</UseWPF>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <AssemblyName>AutoDJMix.App</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AutoDJMix.Application\AutoDJMix.Application.csproj" />
+    <ProjectReference Include="..\AutoDJMix.Infrastructure\AutoDJMix.Infrastructure.csproj" />
+    <ProjectReference Include="..\AutoDJMix.Persistence\AutoDJMix.Persistence.csproj" />
+  </ItemGroup>
+</Project>

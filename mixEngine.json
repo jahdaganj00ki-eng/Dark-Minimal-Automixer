@@ -1,0 +1,337 @@
+{
+  "mix_engine": {
+    "version": "1.2",
+    "name": "ThomasKlipps_AninaOwly_Lampe_MixEngine_v1.2",
+    "description": "Automatische DJ-Mix-Logik für Dark Minimal, Progressive und Melodic Techno von Thomas Klipps, Anina Owly und Lampe",
+    "acts": {
+      "THOMAS_KLIPPS": {
+        "primary_role": "DARK_HYPNOTIC",
+        "bpm_range": [124, 129],
+        "darkness_bias": 85,
+        "melody_bias": 20,
+        "psy_bias": 10
+      },
+      "ANINA_OWLY": {
+        "primary_role": "PROGRESSIVE_DRIVER", 
+        "bpm_range": [126, 132],
+        "melody_bias": 70,
+        "darkness_bias": 60,
+        "psy_bias": 20
+      },
+      "LAMPE": {
+        "primary_role": "MINIMAL_BRIDGE",
+        "bpm_range": [125, 130],
+        "flex_bias": 75,
+        "melody_bias": 50,
+        "psy_bias": 40
+      }
+    },
+    "role_weights": {
+      "groove_match": 0.24,
+      "key_match": 0.16,
+      "energy_flow": 0.14,
+      "bass_safety": 0.14,
+      "break_safety": 0.18,
+      "hook_penalty": -0.12,
+      "style_jump": -0.10
+    },
+    "thresholds": {
+      "perfect": 85,
+      "good": 70,
+      "risky": 55,
+      "avoid": 40
+    },
+    "set_phases": {
+      "WARMUP": {"duration_min": 15, "preferred_roles": ["DARK_HYPNOTIC"], "energy_target": [3,5]},
+      "HYPNOSIS": {"duration_min": 25, "preferred_roles": ["DARK_HYPNOTIC", "MINIMAL_BRIDGE"], "energy_target": [5,7]},
+      "LIFT": {"duration_min": 20, "preferred_roles": ["PROGRESSIVE_DRIVER"], "energy_target": [7,8]},
+      "PEAK": {"duration_min": 15, "preferred_roles": ["MELODIC_OPEN", "PSY_EDGE"], "energy_target": [8,10]},
+      "RELEASE": {"duration_min": 10, "preferred_roles": ["DARK_HYPNOTIC", "MINIMAL_BRIDGE"], "energy_target": [4,6]}
+    },
+    "rules": [
+      {
+        "id": 1,
+        "from": "DARK_HYPNOTIC",
+        "to": "DARK_HYPNOTIC",
+        "compatibility": 95,
+        "transition": "LONG_EQ_BLEND",
+        "bpm_max_delta": 2,
+        "key_rule": "compatible",
+        "duration_beats": 64,
+        "eq_strategy": {"bass_swap": 48, "mid_fade": 32, "high_blend": 16},
+        "fx_allowed": ["filter_low", "delay_subtle"],
+        "notes": "Thomas Dark -> Thomas Dark: Hypnose perfekt erhalten"
+      },
+      {
+        "id": 2,
+        "from": "DARK_HYPNOTIC",
+        "to": "PROGRESSIVE_DRIVER",
+        "compatibility": 92,
+        "transition": "INTRO_OVER_OUTRO",
+        "bpm_max_delta": 3,
+        "key_rule": "adjacent",
+        "duration_beats": 48,
+        "eq_strategy": {"old_bass_out": 24, "new_mid_in": 16, "high_open": 8},
+        "fx_allowed": ["filter_open"],
+        "notes": "Thomas -> Anina/Thomas: Natürlicher Energie-Lift"
+      },
+      {
+        "id": 3,
+        "from": "DARK_HYPNOTIC",
+        "to": "MINIMAL_BRIDGE",
+        "compatibility": 88,
+        "transition": "PERCUSSION_LOOP_BLEND",
+        "bpm_max_delta": 2,
+        "key_rule": "same_or_adjacent",
+        "duration_beats": 32,
+        "loop_bars": [8, 16],
+        "fx_allowed": ["none"],
+        "notes": "Thomas -> Lampe Minimal: Groove verfeinern"
+      },
+      {
+        "id": 4,
+        "from": "DARK_HYPNOTIC",
+        "to": "MELODIC_OPEN",
+        "compatibility": 62,
+        "transition": "BRIDGE_TRACK_REQUIRED",
+        "bpm_max_delta": 3,
+        "key_rule": "compatible",
+        "bridge_roles": ["NEUTRAL_TOOL", "MINIMAL_BRIDGE"],
+        "notes": "Thomas -> Lampe Melodic nur über Brücke"
+      },
+      {
+        "id": 5,
+        "from": "PROGRESSIVE_DRIVER",
+        "to": "DARK_HYPNOTIC",
+        "compatibility": 68,
+        "transition": "PERCUSSION_ROLLBACK",
+        "bpm_max_delta": 2,
+        "key_rule": "adjacent",
+        "duration_beats": 32,
+        "eq_strategy": {"mid_reduce": 16, "bass_reinforce": 24},
+        "notes": "Anina/Thomas -> Thomas: Druck zurückholen"
+      },
+      {
+        "id": 6,
+        "from": "PROGRESSIVE_DRIVER",
+        "to": "MINIMAL_BRIDGE",
+        "compatibility": 90,
+        "transition": "LONG_EQ_BLEND",
+        "bpm_max_delta": 2,
+        "key_rule": "perfect_match",
+        "duration_beats": 48,
+        "notes": "Anina/Thomas -> Lampe: Spannung in Groove umformen"
+      },
+      {
+        "id": 7,
+        "from": "PROGRESSIVE_DRIVER",
+        "to": "MELODIC_OPEN",
+        "compatibility": 85,
+        "transition": "BREAK_REBUILD",
+        "bpm_max_delta": 2,
+        "key_rule": "perfect_match",
+        "max_break_overlap": 2,
+        "notes": "Anina/Thomas -> Lampe Melodic: Peak erweitern"
+      },
+      {
+        "id": 8,
+        "from": "MINIMAL_BRIDGE",
+        "to": "DARK_HYPNOTIC",
+        "compatibility": 87,
+        "transition": "LOW_END_REINFORCE",
+        "bpm_max_delta": 1,
+        "key_rule": "same",
+        "duration_beats": 32,
+        "eq_strategy": {"bass_double": 16, "melody_reduce": 8},
+        "notes": "Lampe -> Thomas: Druck verdichten"
+      },
+      {
+        "id": 9,
+        "from": "MINIMAL_BRIDGE",
+        "to": "PROGRESSIVE_DRIVER",
+        "compatibility": 89,
+        "transition": "GROOVE_LIFT",
+        "bpm_max_delta": 2,
+        "key_rule": "compatible",
+        "duration_beats": 40,
+        "notes": "Lampe -> Anina/Thomas: Fahrt erhöhen"
+      },
+      {
+        "id": 10,
+        "from": "MINIMAL_BRIDGE",
+        "to": "MELODIC_OPEN",
+        "compatibility": 82,
+        "transition": "HARMONIC_BLEND",
+        "bpm_max_delta": 2,
+        "key_rule": "perfect_match",
+        "duration_beats": 32,
+        "notes": "Lampe -> Lampe Melodic: Natürliche Öffnung"
+      },
+      {
+        "id": 11,
+        "from": "MELODIC_OPEN",
+        "to": "DARK_HYPNOTIC",
+        "compatibility": 58,
+        "transition": "ECHO_OUT_SWITCH",
+        "bpm_max_delta": 3,
+        "key_rule": "adjacent",
+        "fx_required": ["echo_out", "filter_sweep"],
+        "duration_beats": 24,
+        "notes": "Lampe Melodic -> Thomas: Riskanter Reset"
+      },
+      {
+        "id": 12,
+        "from": "MELODIC_OPEN",
+        "to": "PROGRESSIVE_DRIVER",
+        "compatibility": 84,
+        "transition": "BREAK_EXIT_BLEND",
+        "bpm_max_delta": 2,
+        "key_rule": "compatible",
+        "duration_beats": 32,
+        "notes": "Lampe Melodic -> Anina/Thomas: Emotion weitertragen"
+      },
+      {
+        "id": 13,
+        "from": "DARK_HYPNOTIC",
+        "to": "PSY_EDGE",
+        "compatibility": 55,
+        "transition": "TOOL_BRIDGE",
+        "bridge_roles": ["NEUTRAL_TOOL"],
+        "notes": "Thomas -> Lampe Psy nur über Tool"
+      },
+      {
+        "id": 14,
+        "from": "PROGRESSIVE_DRIVER",
+        "to": "PSY_EDGE",
+        "compatibility": 78,
+        "transition": "PEAK_EXTEND",
+        "bpm_max_delta": 3,
+        "key_rule": "adjacent",
+        "notes": "Anina/Thomas -> Lampe Psy: Peak-Verlängerung"
+      },
+      {
+        "id": 15,
+        "from": "MINIMAL_BRIDGE",
+        "to": "PSY_EDGE",
+        "compatibility": 80,
+        "transition": "PERC_TO_PSY",
+        "bpm_max_delta": 2,
+        "duration_beats": 32,
+        "notes": "Lampe -> Lampe Psy: Groove zu Psy"
+      },
+      {
+        "id": 16,
+        "from": "PSY_EDGE",
+        "to": "DARK_HYPNOTIC",
+        "compatibility": 60,
+        "transition": "PSY_TO_DARK_RESET",
+        "fx_required": ["filter_close", "reverb_wash"],
+        "notes": "Lampe Psy -> Thomas: Psy-Reset"
+      },
+      {
+        "id": 17,
+        "from": "NEUTRAL_TOOL",
+        "to": "DARK_HYPNOTIC",
+        "compatibility": 90,
+        "transition": "CLEAN_KICK_IN",
+        "bpm_max_delta": 2,
+        "notes": "Tool -> Thomas: Sauberer Einstieg"
+      },
+      {
+        "id": 18,
+        "from": "NEUTRAL_TOOL",
+        "to": "PROGRESSIVE_DRIVER",
+        "compatibility": 88,
+        "transition": "TOOL_TO_PROGRESSION",
+        "bpm_max_delta": 3,
+        "notes": "Tool -> Anina/Thomas: Progressiver Lift"
+      },
+      {
+        "id": 19,
+        "from": "DARK_HYPNOTIC",
+        "to": "NEUTRAL_TOOL",
+        "compatibility": 92,
+        "transition": "SEAMLESS_TOOL",
+        "bpm_max_delta": 2,
+        "notes": "Thomas -> Tool: Nahtloser Übergang"
+      },
+      {
+        "id": 20,
+        "from_set_phase": "WARMUP",
+        "to_role": "DARK_HYPNOTIC",
+        "priority_boost": 15,
+        "notes": "Warm-up immer mit Thomas starten"
+      },
+      {
+        "id": 21,
+        "from_set_phase": "HYPNOSIS",
+        "to_role": "PROGRESSIVE_DRIVER",
+        "priority_boost": 12,
+        "notes": "Hypnose -> Lift mit Anina/Thomas"
+      },
+      {
+        "id": 22,
+        "from_set_phase": "LIFT",
+        "to_role": "MINIMAL_BRIDGE",
+        "priority_boost": 10,
+        "notes": "Lift -> Groove mit Lampe"
+      },
+      {
+        "id": 23,
+        "from_set_phase": "PEAK",
+        "to_role": "MELODIC_OPEN",
+        "priority_boost": 8,
+        "notes": "Peak mit Lampe Melodic/PSY"
+      },
+      {
+        "id": 24,
+        "energy_drop": true,
+        "to_role": "DARK_HYPNOTIC",
+        "priority_boost": 20,
+        "notes": "Energieabfall -> Thomas zurück"
+      },
+      {
+        "id": 25,
+        "consecutive_same_role": 3,
+        "penalty": -15,
+        "force_diversity": true,
+        "notes": "Max 3 gleiche Rollen hintereinander"
+      },
+      {
+        "id": 26,
+        "hook_conflict": "high",
+        "force_transition": "LOOP_BLEND_ONLY",
+        "notes": "Hook-Konflikt -> nur Loop-Mix"
+      },
+      {
+        "id": 27,
+        "bass_clash": "high",
+        "force_eq": {"bass_never_overlap": true},
+        "notes": "Bass-Kollision -> strikte Trennung"
+      },
+      {
+        "id": 28,
+        "double_break_risk": "high",
+        "force_transition": "BREAK_REBUILD_ONLY",
+        "notes": "Doppel-Break -> Break-Rebuild zwingend"
+      }
+    ],
+    "key_wheel": {
+      "1A": ["1A", "2B", "3A", "6B"],
+      "2B": ["2B", "3A", "4B", "1A"],
+      "3A": ["3A", "4B", "5A", "2B"],
+      "4B": ["4B", "5A", "6B", "3A"],
+      "5A": ["5A", "6B", "1A", "4B"],
+      "6B": ["6B", "1A", "2B", "5A"]
+    },
+    "score_formula": "final_score = (base_compat * 0.6) + (phase_boost * 0.2) + (risk_penalty * 0.2)",
+    "decision_matrix": {
+      ">=85": "PERFECT - Sofort abspielen",
+      "70-84": "GOOD - Übergang OK", 
+      "55-69": "RISKY - Nur mit Bridge/FX",
+      "<55": "AVOID - Überspringen"
+    },
+    "created": "2026-05-03",
+    "optimized_for": ["Thomas Klipps Dark Minimal", "Anina Owly Progressive", "Lampe Minimal/Melodic"]
+  }
+}

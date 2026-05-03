@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\AutoDJMix.Application\AutoDJMix.Application.csproj" />
+    <ProjectReference Include="..\AutoDJMix.Domain\AutoDJMix.Domain.csproj" />
+  </ItemGroup>
+</Project>
